@@ -75,7 +75,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 						onClick={prevSlide}
 						disabled={isStartDisabled}
 						className={`absolute top-1/2 -left-0 transform -translate-y-1/2 p-2 rounded-full transition-colors duration-300 ${
-							isStartDisabled ? "bg-gray-800 cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-500"
+							isStartDisabled ? "bg-gray-800 cursor-not-allowed" : "bg-black hover:shadow-lg"
 						}`}
 					>
 						<ChevronLeft className='w-6 h-6' />
@@ -85,7 +85,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 						onClick={nextSlide}
 						disabled={isEndDisabled}
 						className={`absolute top-1/2 -right-0 transform -translate-y-1/2 p-2 rounded-full transition-colors duration-300 ${
-							isEndDisabled ? "bg-gray-800 cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-500"
+							isEndDisabled ? "bg-gray-800 cursor-not-allowed" : "bg-black hover:shadow-lg"
 						}`}
 					>
 						<ChevronRight className='w-6 h-6' />
