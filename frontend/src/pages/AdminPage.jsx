@@ -14,7 +14,7 @@ const tabs = [
 ];
 
 const AdminPage = () => {
-	const [activeTab, setActiveTab] = useState("create");
+	const [activeTab, setActiveTab] = useState("analytics");
 	const { fetchAllProducts } = useProductStore();
 
 	useEffect(() => {
@@ -22,10 +22,10 @@ const AdminPage = () => {
 	}, [fetchAllProducts]);
 
 	return (
-		<div className='min-h-screen relative overflow-hidden'>
-			<div className='relative z-10 container mx-auto px-4 py-16'>
+		<div className=' px-10 '>
+			<div className=' z-10  py-8'>
 				<motion.h1
-					className='text-4xl font-bold mb-8 text-emerald-400 text-center'
+					className='text-4xl font-bold mb-8 text-black text-left'
 					initial={{ opacity: 0, y: -20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
@@ -33,18 +33,18 @@ const AdminPage = () => {
 					Admin Dashboard
 				</motion.h1>
 
-				<div className='flex justify-center mb-8'>
+				<div className='flex justify-center md:justify-start  mb-8'>
 					{tabs.map((tab) => (
 						<button
 							key={tab.id}
 							onClick={() => setActiveTab(tab.id)}
-							className={`flex items-center px-4 py-2 mx-2 rounded-md transition-colors duration-200 ${
+							className={`flex items-center px-4 py-2 rounded-none text-[13px] md:text-[14px] transition-colors duration-200 ${
 								activeTab === tab.id
-									? "bg-emerald-600 text-white"
-									: "bg-gray-700 text-gray-300 hover:bg-gray-600"
+									? "bg-white border-[1px] text-black"
+									: "bg-[white] text-black hover:shadow-lg hover:border-none"
 							}`}
 						>
-							<tab.icon className='mr-2 h-5 w-5' />
+							<tab.icon className='mr-2 h-4 w-4 hidden md:flex' />
 							{tab.label}
 						</button>
 					))}

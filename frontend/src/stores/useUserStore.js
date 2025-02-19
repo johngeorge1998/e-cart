@@ -30,6 +30,11 @@ export const useUserStore = create((set, get) => ({
 			const res = await axios.post("/auth/login", { email, password });
 
 			set({ user: res.data, loading: false });
+			if (res.data.role === "admin") {
+				window.location.href = "/secret-dashboard";  
+			  } else {
+				window.location.href = "/"; 
+			  }
 		} catch (error) {
 			set({ loading: false });
 			toast.error(error.response.data.message || "An error occurred");
@@ -40,6 +45,7 @@ export const useUserStore = create((set, get) => ({
 		try {
 			await axios.post("/auth/logout");
 			set({ user: null });
+			window.location.href = "/login"; 
 		} catch (error) {
 			toast.error(error.response?.data?.message || "An error occurred during logout");
 		}
