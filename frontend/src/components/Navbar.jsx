@@ -5,7 +5,8 @@ import { useCartStore } from "../stores/useCartStore";
 
 const Navbar = () => {
 	const { user, logout } = useUserStore();
- 	const isAdmin = user?.role === "admin";
+	console.log("🚀 ~ Navbar ~ user:", user)
+	const isAdmin = user?.role === "admin";
 	const { cart } = useCartStore();
 
 	return (
@@ -34,8 +35,8 @@ const Navbar = () => {
 								<span className='hidden sm:inline'>Cart</span>
 								{cart.length > 0 && (
 									<span
-										className='absolute -top-2 -left-2 bg-yellow-500 text-white rounded-full px-2 py-0.5 
-									text-xs group-hover:bg-yellow-400 transition duration-300 ease-in-out'
+										className='absolute -top-2 -left-2 bg-white text-black rounded-full px-[6px]  
+									text-xs group-hover:bg-[#f5f5f5] transition duration-300 ease-in-out'
 									>
 										{cart.length}
 									</span>
