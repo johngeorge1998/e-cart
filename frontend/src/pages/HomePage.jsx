@@ -7,7 +7,7 @@ import { ArrowDown01, ArrowUp10, Search } from "lucide-react";
 
 const categories = [
   { href: "/jeans", name: "Jeans", imageUrl: "/jeans.jpg" },
-  { href: "/t-shirts", name: "Shirts", imageUrl: "/tshirts.jpg" },
+  { href: "/shirts", name: "Shirts", imageUrl: "/shirt.webp" },
   { href: "/shoes", name: "Shoes", imageUrl: "/shoes.jpg" },
   { href: "/glasses", name: "Glasses", imageUrl: "/glasses.png" },
   { href: "/jackets", name: "Jackets", imageUrl: "/jackets.jpg" },
