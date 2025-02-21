@@ -1,7 +1,7 @@
 import Order from "../models/order.model.js";   
 import Product from "../models/product.model.js";  
  import User from "../models/user.model.js" 
-export const createOrder = async (req, res) => {
+ export const createOrder = async (req, res) => {
   try {
     const { userId, products } = req.body;
 
@@ -20,8 +20,13 @@ export const createOrder = async (req, res) => {
         return res.status(400).json({ message: `Not enough stock for product ${product.name}` });
       }
 
-      // Decrease stock in the product
-      product.quantity -= item.quantity;
+      // Decrease stock in the product, ensuring it doesn't go below 1
+      const updatedQuantity = product.quantity - item.quantity;
+      if (updatedQuantity < 0) {
+        return res.status(400).json({ message: `Not enough stock for product ${product.name}` });
+      }
+
+      product.quantity = updatedQuantity;
       await product.save();
 
       // Prepare the product details for the order
@@ -58,3 +63,4 @@ export const createOrder = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
