@@ -8,6 +8,8 @@ export const useProductStore = create((set) => ({
 
 	setProducts: (products) => set({ products }),
 	createProduct: async (productData) => {
+		console.log('productData',productData);
+		
 		set({ loading: true });
 		try {
 			const res = await axios.post("/products", productData);

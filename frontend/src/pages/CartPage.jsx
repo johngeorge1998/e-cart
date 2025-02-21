@@ -8,6 +8,7 @@ import OrderSummary from "../components/OrderSummary";
 
 const CartPage = () => {
 	const { cart } = useCartStore();
+	
 
 	return (
 		<div className='py-8 md:py-16'>

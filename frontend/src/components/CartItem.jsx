@@ -1,9 +1,26 @@
 import { Minus, Plus, Trash } from "lucide-react";
 import { useCartStore } from "../stores/useCartStore";
+import { useProductStore } from "../stores/useProductStore";
+import { useEffect, useState } from "react";
 
 const CartItem = ({ item }) => {
-	const { removeFromCart, updateQuantity } = useCartStore();
+ 	const { removeFromCart, updateQuantity } = useCartStore();
+	const { products,fetchAllProducts } = useProductStore();
+	const [cartItemQuantity, setCartItemQuantity] = useState(null)
+ console.log('products',products);
+ console.log('item',item);
+ 
+	useEffect(() => {
+ 		fetchAllProducts();
+	}, [fetchAllProducts]);
 
+	useEffect(() => {
+ 		if (products.length > 0) {
+			const currentProduct = products.find((product) => product._id === item._id);
+			setCartItemQuantity(currentProduct?.quantity || 0);
+		}
+	}, [products, item._id]);
+	
 	return (
 		<div className='rounded-lg  p-4 shadow-sm border-[1px] bg-white md:p-6 relative'>
 			<div className='space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0'>
@@ -27,7 +44,12 @@ const CartItem = ({ item }) => {
 							className='inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-[1px]
 							 border-gray-600 bg-white hover:bg-gray-100 focus:outline-none 
 						focus:ring-2 focus:ring-gray-600'
-							onClick={() => updateQuantity(item._id, item.quantity + 1)}
+						onClick={() => {
+							if (item.quantity < cartItemQuantity) {
+								updateQuantity(item._id, item.quantity + 1)
+							}
+						}}
+						disabled={item.quantity >= cartItemQuantity}
 						>
 							<Plus className='text-black' />
 						</button>
@@ -35,7 +57,7 @@ const CartItem = ({ item }) => {
 					
 
 					<div className='text-end md:order-4 md:w-32'>
-						<p className='text-base font-bold text-black'>₹{item.price}</p>
+						<p className='text-base font-bold text-black'>₹{item.price * item.quantity}</p>
 					</div>
 					
 				</div>

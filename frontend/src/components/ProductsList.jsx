@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Trash, Star } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
@@ -6,7 +5,6 @@ import { useProductStore } from "../stores/useProductStore";
 const ProductsList = () => {
 	const { deleteProduct, toggleFeaturedProduct, products } = useProductStore();
 
-	console.log("products", products);
 
 	return (
 		<motion.div
@@ -36,7 +34,12 @@ const ProductsList = () => {
 						>
 							Category
 						</th>
-
+						<th
+							scope='col'
+							className='px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider'
+						>
+							Quantity
+						</th>
 						<th
 							scope='col'
 							className='px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider'
@@ -70,10 +73,13 @@ const ProductsList = () => {
 								</div>
 							</td>
 							<td className='px-6 py-4 whitespace-nowrap'>
-								<div className='text-sm text-black '>${product.price.toFixed(2)}</div>
+								<div className='text-sm text-black '>₹{product.price.toFixed(2)}</div>
 							</td>
 							<td className='px-6 py-4 whitespace-nowrap'>
 								<div className='text-sm text-black '>{product.category}</div>
+							</td>
+							<td className='px-6 py-4 whitespace-nowrap'>
+								<div className='text-sm text-black '>{product.quantity}</div>
 							</td>
 							<td className='px-6 py-4 whitespace-nowrap'>
 								<button
