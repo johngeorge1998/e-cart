@@ -2,21 +2,26 @@ import { create } from "zustand";
 import axios from "../lib/axios";
 import toast from "react-hot-toast";
 
-// Zustand store for managing orders
-export const useOrderStore = create((set) => ({
-  orders: [], // List of orders
+export const useOrderStore = create((set, get) => ({
+  orders: [],
   loading: false,
   error: null,
 
-  // Action to create an order
   createOrder: async (orderData) => {
+    if (get().loading) {
+      return;
+    }
+
     set({ loading: true });
+
     try {
-      const res = await axios.post("/orders", orderData); // Send order data to backend
+      const res = await axios.post("/orders", orderData);
+
       set((prevState) => ({
-        orders: [...prevState.orders, res.data], // Add the new order to the orders list
+        orders: [...prevState.orders, res.data],
         loading: false,
       }));
+
       toast.success("Order placed successfully!");
     } catch (error) {
       set({ loading: false });
@@ -24,7 +29,6 @@ export const useOrderStore = create((set) => ({
     }
   },
 
-  // Action to fetch orders for the user
   fetchUserOrders: async (userId) => {
     set({ loading: true });
     try {
@@ -36,6 +40,5 @@ export const useOrderStore = create((set) => ({
     }
   },
 
-  // Action to clear orders (optional)
   clearOrders: () => set({ orders: [] }),
 }));
