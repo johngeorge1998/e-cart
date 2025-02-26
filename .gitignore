@@ -2,14 +2,32 @@
 /node_modules/
 frontend/node_modules/
 
-# Ignore package-lock.json (optional)
+# Ignore package manager lock files
 package-lock.json
 frontend/package-lock.json
 
-# Ignore package.json (optional)
+# Ignore package.json
 package.json
 frontend/package.json
 
 # Ignore environment files
 .env
 frontend/.env
+
+# Ignore build directories
+/dist/
+frontend/dist/
+build/
+frontend/build/
+
+# Ignore logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Ignore VS Code settings (if using VS Code)
+.vscode/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
