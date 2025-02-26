@@ -15,6 +15,7 @@ import { useCartStore } from "./stores/useCartStore";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 import HomePage from "./pages/HomePage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -41,6 +42,7 @@ function App() {
       </div>
 
       <div className="relative z-50 pt-20">
+      <ScrollToTop />
         {user && <Navbar />}
 
 		<Routes>
