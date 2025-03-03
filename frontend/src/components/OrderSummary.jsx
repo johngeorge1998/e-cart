@@ -73,9 +73,10 @@ const OrderSummary = () => {
         <div className="space-y-2">
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
-              <p className={`text-base font-semibold text-black ${isEditing ? 'mb-1' : ''}`}>
+              <p className={`${isEditing?'text-xl':'text-base'} font-semibold text-black ${isEditing ? 'mb-1' : ''}`}>
                 {isEditing? "Change Delivery Address":"Delivery Address"}
               </p>
+ 
               {!isEditing && (
                 <button
                   onClick={() => setIsEditing(true)}
