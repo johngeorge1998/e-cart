@@ -16,7 +16,7 @@ const categories = [
 ];
 
 const HomePage = () => {
-  const { fetchFeaturedProducts, products, isLoading, fetchAllProducts } =
+  const { fetchFeaturedProducts,featuredProducts, products, isLoading, fetchAllProducts } =
     useProductStore();
     
   const [searchQuery, setSearchQuery] = useState("");
@@ -70,8 +70,8 @@ const HomePage = () => {
           ))}
         </div>
 
-		{!isLoading && products.length > 0 && (
-          <FeaturedProducts featuredProducts={products} />
+		{!isLoading && featuredProducts.length > 0 && (
+          <FeaturedProducts featuredProducts={featuredProducts} />
         )}
 
         <div className="flex items-center justify-between px-1">
