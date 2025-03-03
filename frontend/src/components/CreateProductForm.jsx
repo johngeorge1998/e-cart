@@ -131,7 +131,7 @@ const CreateProductForm = () => {
               onChange={(e) =>
                 setNewProduct({ ...newProduct, description: e.target.value })
               }
-              rows="3"
+              rows={isEdit?"6":"3"}
               className=" block w-full px-3 py-2 pl-5 bg-[#fff] border border-[#c5c5c5] 
   						rounded-lg shadow-sm placeholder-gray-600 text-[#000] focus:outline-none focus:ring-black focus:border-black  sm:text-sm"
               required
@@ -161,7 +161,7 @@ const CreateProductForm = () => {
             />
           </div>
 
-          <div>
+         {!isEdit && ( <div>
             <label
               htmlFor="category"
               className="block text-[14px] text-gray-600 font-semibold mb-2"
@@ -194,7 +194,8 @@ const CreateProductForm = () => {
                 <ChevronDown className="h-5 w-5 text-gray-400" />
               </div>
             </div>
-          </div>
+          </div>)
+          }
 
           <div>
             <label
