@@ -222,10 +222,10 @@ const OrderSummary = () => {
             <dt className="text-base font-normal text-gray-700">
               Original price
             </dt>
-            <dd className="text-base font-medium text-black">${total}</dd>
+            <dd className="text-base font-medium text-black">${(total.toFixed(2))}</dd>
           </dl><dl className="flex items-center justify-between gap-4 border-t border-gray-600 pt-2">
               <dt className="text-base font-bold text-black">Total</dt>
-              <dd className="text-base font-bold text-black">${total}</dd>
+              <dd className="text-base font-bold text-black">${total.toFixed(2)}</dd>
             </dl></>)}
         </div>
 
