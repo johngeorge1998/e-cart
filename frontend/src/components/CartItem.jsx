@@ -7,9 +7,7 @@ const CartItem = ({ item }) => {
  	const { removeFromCart, updateQuantity } = useCartStore();
 	const { products,fetchAllProducts } = useProductStore();
 	const [cartItemQuantity, setCartItemQuantity] = useState(null)
- console.log('products',products);
- console.log('item',item);
- 
+  
 	useEffect(() => {
  		fetchAllProducts();
 	}, [fetchAllProducts]);
@@ -57,7 +55,7 @@ const CartItem = ({ item }) => {
 					
 
 					<div className='text-end md:order-4 md:w-32'>
-						<p className='text-base font-bold text-black'>₹{item.price * item.quantity}</p>
+						<p className='text-base font-bold text-black'>${item.price * item.quantity}</p>
 					</div>
 					
 				</div>

@@ -16,6 +16,8 @@ import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 import HomePage from "./pages/HomePage";
 import ScrollToTop from "./components/ScrollToTop";
+import CreateProductForm from "./components/CreateProductForm";
+import ProductsList from "./components/ProductsList";
 
 function App() {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -74,6 +76,12 @@ function App() {
             path="/purchase-cancel"
             element={user ? <PurchaseCancelPage /> : <Navigate to="/login" />}
           />
+            <Route path="/product" element={user ? <CreateProductForm/>  : <Navigate to="/login" />} />
+ 
+            
+            <Route path="/product-list" element={user ? <ProductsList/>  : <Navigate to="/login" />} />
+            
+
         </Routes>
       </div>
       <Toaster />

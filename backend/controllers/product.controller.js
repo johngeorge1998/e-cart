@@ -144,3 +144,49 @@ async function updateFeaturedProductsCache() {
 		console.error("Error in update cache function:", error);
 	}
 }
+
+export const editProduct = async (req, res) => {
+	try {
+	  const { name, description, price, image, category, quantity } = req.body;
+	  const productId = req.params.id;
+  
+	  // Check if the quantity is valid
+	  if (quantity < 0) {
+		return res.status(400).json({ message: "Product quantity must be at least 0." });
+	  }
+  
+	  // Find the product to update
+	  const product = await Product.findById(productId);
+	  if (!product) {
+		return res.status(404).json({ message: "Product not found" });
+	  }
+  
+	  // Handle image upload if provided
+	  let cloudinaryResponse = null;
+	  if (image) {
+		cloudinaryResponse = await cloudinary.uploader.upload(image, { folder: "products" });
+	  }
+  
+	  // Update product fields
+	  product.name = name || product.name;
+	  product.description = description || product.description;
+	  product.price = price || product.price;
+	  product.image = cloudinaryResponse?.secure_url || product.image;
+	  product.category = category || product.category;
+	  product.quantity = quantity !== undefined ? quantity : product.quantity;
+  
+	  // Save updated product
+	  await product.save();
+  
+	  // Optionally clear the featured products cache if this is a featured product
+	  if (product.isFeatured) {
+		await updateFeaturedProductsCache();
+	  }
+  
+	  res.json(product);
+	} catch (error) {
+	  console.error("Error in editProduct controller:", error);
+	  res.status(500).json({ message: "Server error", error: error.message });
+	}
+  };
+  

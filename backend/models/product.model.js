@@ -37,13 +37,6 @@ const productSchema = new mongoose.Schema(
 );
 
 
-// Middleware to remove product if quantity reaches 0
-productSchema.post("save", async function (doc) {
-  if (doc.quantity === 0) {
-    await Product.findByIdAndDelete(doc._id);
-    console.log(`Product with ID ${doc._id} deleted due to zero quantity.`);
-  }
-});
 
 
 const Product = mongoose.model("Product", productSchema);

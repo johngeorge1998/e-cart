@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { PlusCircle, Upload, Loader, ChevronDown } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
-
 
 const categories = [
   "jeans",
@@ -20,26 +20,36 @@ const CreateProductForm = () => {
     description: "",
     price: "",
     category: "",
-    quantity:1,
+    quantity: 1,
     image: "",
   });
+  const navigate = useNavigate();
 
-  const { createProduct, loading } = useProductStore();
+  const { state } = useLocation();
+  const { createProduct, editProduct, loading } = useProductStore();
+
+  const isEdit = state?.isEdit || false;
+  const productToEdit = state?.product || {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createProduct(newProduct);
+      if (isEdit) {
+        await editProduct(productToEdit._id, newProduct);
+      } else {
+        await createProduct(newProduct);
+      }
       setNewProduct({
         name: "",
         description: "",
         price: "",
         category: "",
-        quantitiy:1,
+        quantity: 1,
         image: "",
       });
-    } catch {
-      console.log("error creating a product");
+      navigate("/product-list");
+    } catch (error) {
+      console.log("Error saving product");
     }
   };
 
@@ -56,18 +66,33 @@ const CreateProductForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (isEdit) {
+      setNewProduct({
+        name: productToEdit.name || "",
+        description: productToEdit.description || "",
+        price: productToEdit.price || "",
+        category: productToEdit.category || "",
+        quantity: productToEdit.quantity || 1,
+        image: productToEdit.image || "",
+      });
+    }
+  }, [isEdit, productToEdit]);
+
   return (
-   <div className="grid grid-cols-12">
+    <div className="grid grid-cols-12">
       <motion.div
-        className="col-span-5 bg-white shadow-none border-[1px] rounded-xl px-6 py-5 mb-6 max-w-full "
+        className={`col-span-5 bg-white shadow-none border-[1px] rounded-xl px-6 py-5 mb-6 max-w-full ${
+          isEdit ? "ml-5" : ""
+        }`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
         <h2 className="text-2xl font-semibold mb-4 text-black">
-          Create New Product
+          {isEdit ? "Edit Product" : "Create New Product"}
         </h2>
-  
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <div
@@ -90,7 +115,7 @@ const CreateProductForm = () => {
               required
             />
           </div>
-  
+
           <div>
             <label
               htmlFor="description"
@@ -112,7 +137,7 @@ const CreateProductForm = () => {
               required
             />
           </div>
-  
+
           <div>
             <label
               htmlFor="price"
@@ -135,7 +160,7 @@ const CreateProductForm = () => {
               required
             />
           </div>
-  
+
           <div>
             <label
               htmlFor="category"
@@ -143,7 +168,7 @@ const CreateProductForm = () => {
             >
               Category
             </label>
-  
+
             <div className="relative">
               <select
                 placeholder="Select a category"
@@ -156,6 +181,7 @@ const CreateProductForm = () => {
                 className="appearance-none block w-full px-3 py-2 pl-5 bg-[#fff] border border-[#c5c5c5] 
   							rounded-lg shadow-sm placeholder-gray-600 text-[#000] focus:outline-none focus:ring-black focus:border-black  sm:text-sm"
                 required
+                disabled={isEdit}
               >
                 <option value="">Select a category</option>
                 {categories.map((category) => (
@@ -169,7 +195,6 @@ const CreateProductForm = () => {
               </div>
             </div>
           </div>
-
 
           <div>
             <label
@@ -196,7 +221,6 @@ const CreateProductForm = () => {
             />
           </div>
 
-
           <div className="mt-1 flex items-center">
             <input
               type="file"
@@ -213,10 +237,12 @@ const CreateProductForm = () => {
               Upload Image
             </label>
             {newProduct.image && (
-              <span className="ml-3 text-sm text-gray-400">Image uploaded </span>
+              <span className="ml-3 text-sm text-gray-400">
+                Image uploaded{" "}
+              </span>
             )}
           </div>
-  
+
           <button
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg 
@@ -234,14 +260,14 @@ const CreateProductForm = () => {
               </>
             ) : (
               <>
-                <PlusCircle className="mr-2 h-5 w-5" />
-                Create Product
+                {isEdit ? "" : <PlusCircle className="mr-2 h-5 w-5" />}
+                {isEdit ? "Update Product" : "Create Product"}
               </>
             )}
           </button>
         </form>
       </motion.div>
-   </div>
+    </div>
   );
 };
 export default CreateProductForm;

@@ -4,7 +4,7 @@ import { useProductStore } from "../stores/useProductStore";
 import FeaturedProducts from "../components/FeaturedProducts";
 import ProductCard from "../components/ProductCard";
 import { ArrowDown01, ArrowUp10, Search } from "lucide-react";
-
+ 
 const categories = [
   { href: "/jeans", name: "Jeans", imageUrl: "/jeans.jpg" },
   { href: "/shirts", name: "Shirts", imageUrl: "/shirt.webp" },
@@ -18,6 +18,7 @@ const categories = [
 const HomePage = () => {
   const { fetchFeaturedProducts, products, isLoading, fetchAllProducts } =
     useProductStore();
+    
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [priceOrder, setPriceOrder] = useState("asc");
@@ -43,9 +44,12 @@ const HomePage = () => {
   const handlePriceOrderChange = () => {
     setPriceOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
+  
   useEffect(() => {
     fetchAllProducts();
   }, [fetchAllProducts]);
+
+
   useEffect(() => {
     fetchFeaturedProducts();
   }, [fetchFeaturedProducts]);

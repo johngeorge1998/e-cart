@@ -4,20 +4,20 @@ const orderSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Reference to the user who made the order
+      ref: "User",
       required: true,
     },
     products: [
       {
         product: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Product", // Reference to the ordered product
+          ref: "Product",
           required: true,
         },
         quantity: {
           type: Number,
           required: true,
-          min: 0, // Prevent negative or zero quantities
+          min: 0,
         },
         price: {
           type: Number,
@@ -29,9 +29,16 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    address: {  
+      streetAddress: String,
+      city: String,
+      province: String,
+      postalCode: String,
+      country: String,
+    },
     status: {
       type: String,
-      enum: ["pending", "shipped", "delivered", "cancelled"], // Order status
+      enum: ["pending", "shipped", "delivered", "cancelled"],
       default: "pending",
     },
     orderDate: {
@@ -41,6 +48,7 @@ const orderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
 const Order = mongoose.model("Order", orderSchema);
 
