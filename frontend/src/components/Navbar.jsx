@@ -13,7 +13,8 @@ const Navbar = () => {
 			<div className='container mx-auto px-4 py-3'>
 				<div className='flex flex-wrap justify-between items-center'>
 					<Link to='/' className='text-2xl font-bold text-white items-center space-x-2 flex'>
-						<p className="text-[14px] font-light">Welcome, <span className="text-[16px] font-semibold">{user?.name}</span></p>
+						<p className="text-[14px] font-light">Welcome, <span className="text-[16px] font-semibold ml-1">{user?.name ? user.name.charAt(0).toUpperCase() + user.name.slice(1) : ''}
+						</span></p>
 					</Link>
 
 					<nav className='flex flex-wrap items-center gap-4'>

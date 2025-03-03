@@ -1,20 +1,20 @@
 import { motion } from "framer-motion";
 import { Trash, Star, Edit } from "lucide-react";
-import {  useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useProductStore } from "../stores/useProductStore";
 
 const ProductsList = () => {
-	const { deleteProduct, toggleFeaturedProduct, products } = useProductStore();
-	const navigate = useNavigate ();
+  const { deleteProduct, toggleFeaturedProduct, products } = useProductStore();
+  const navigate = useNavigate();
 
-	const handleEdit = (product) => {
-		navigate("/product", {
-			state: { product, isEdit: true },  
-		  });
-	  };
+  const handleEdit = (product) => {
+    navigate("/product", {
+      state: { product, isEdit: true },
+    });
+  };
 
-	return (
+  return (
     <motion.div
       className="bg-gray-800 shadow-none border-[1px] rounded-lg overflow-hidden max-w-full mx-auto"
       initial={{ opacity: 0, y: 20 }}
@@ -95,7 +95,7 @@ const ProductsList = () => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <button
-                  onClick={() => toggleFeaturedProduct(product._id)}
+                    onClick={() => toggleFeaturedProduct(product._id)}
                   className={`p-1 rounded-full ${
                     product.isFeatured
                       ? "bg-yellow-400 text-gray-900"
@@ -105,18 +105,21 @@ const ProductsList = () => {
                   <Star className="h-5 w-5" />
                 </button>
               </td>
-              <td  className="px-6 py-4 whitespace-nowrap">
-                	  	<button onClick={() => handleEdit(product)}  className="text-green-400 hover:text-green-300 mr-5">
-		                  <Edit className="h-5 w-5" />
-	 	                </button>
-		
-		                <button
-		                  onClick={() => deleteProduct(product._id)}
-		                  className="text-red-400 hover:text-red-300"
-		                >
-		                  <Trash className="h-5 w-5" />
-		                </button>
-                </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <button
+                  onClick={() => handleEdit(product)}
+                  className="text-green-400 hover:text-green-300 mr-5"
+                >
+                  <Edit className="h-5 w-5" />
+                </button>
+
+                <button
+                  onClick={() => deleteProduct(product._id)}
+                  className="text-red-400 hover:text-red-300"
+                >
+                  <Trash className="h-5 w-5" />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
