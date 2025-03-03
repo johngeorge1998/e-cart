@@ -34,33 +34,40 @@ const setCookies = (res, accessToken, refreshToken) => {
 };
 
 export const signup = async (req, res) => {
-	const { email, password, name, address,role  } = req.body;
+	const { email, password, name, address, role, isCreateUser } = req.body;
+  
 	try {
-		const userExists = await User.findOne({ email });
-
-		if (userExists) {
-			return res.status(400).json({ message: "User already exists" });
-		}
-		const user = await User.create({ name, email, address , password,role });
-
-		// authenticate
-		const { accessToken, refreshToken } = generateTokens(user._id);
-		await storeRefreshToken(user._id, refreshToken);
-
-		setCookies(res, accessToken, refreshToken);
-
-		res.status(201).json({
-			_id: user._id,
-			name: user.name,
-			email: user.email,
-			role: user.role,
-			address :user.address,
+ 	  const userExists = await User.findOne({ email });
+	  if (userExists) {
+		return res.status(400).json({ message: "User already exists" });
+	  }
+  
+ 	  const user = await User.create({ name, email, address, password, role });
+  
+ 	  if (isCreateUser) {
+		return res.status(201).json({
+		  message: "User created successfully",
 		});
+	  }
+  
+ 	  const { accessToken, refreshToken } = generateTokens(user._id);
+	  await storeRefreshToken(user._id, refreshToken);
+  
+ 	  setCookies(res, accessToken, refreshToken);
+  
+ 	  res.status(201).json({
+		_id: user._id,
+		name: user.name,
+		email: user.email,
+		role: user.role,
+		address: user.address,
+	  });
 	} catch (error) {
-		console.log("Error in signup controller", error.message);
-		res.status(500).json({ message: error.message });
+	  console.log("Error in signup controller", error.message);
+	  res.status(500).json({ message: error.message });
 	}
-};
+  };
+  
 
 export const login = async (req, res) => {
 	try {
