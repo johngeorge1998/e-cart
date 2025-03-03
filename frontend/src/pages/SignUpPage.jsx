@@ -12,7 +12,7 @@ import {
 import { motion } from "framer-motion";
 import { useUserStore } from "../stores/useUserStore";
 
-const SignUpPage = () => {
+const SignUpPage = ({ isCreateUser }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,14 +25,17 @@ const SignUpPage = () => {
       postalCode: "",
       country: "Canada",
     },
+    role: "customer",
   });
 
   const { signup, loading } = useUserStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(formData);
+    signup(formData,isCreateUser);
   };
+
+   
 
   return (
     <div className="flex flex-col justify-center items-center sm:px-6 lg:px-8">
@@ -43,7 +46,7 @@ const SignUpPage = () => {
         transition={{ duration: 0.8 }}
       >
         <h2 className="mt-6 text-center text-[36px] font-extrabold text-black">
-          JOIN US
+        {isCreateUser ? "Add User" : "JOIN US"}
         </h2>
       </motion.div>
 
@@ -176,6 +179,38 @@ const SignUpPage = () => {
                 />
               </div>
             </div>
+
+            {isCreateUser && (
+              <div>
+                <label
+                  htmlFor="role"
+                  className="block text-[14px] text-gray-600 font-semibold"
+                >
+                  User Role
+                </label>
+                <div className="mt-1 relative rounded-xl shadow-sm">
+                <div className="mt-1 relative rounded-xl shadow-sm">
+
+                  <select
+                    id="role"
+                    required
+                     value={formData.role}
+                    onChange={(e) =>
+                      setFormData({ ...formData, role: e.target.value })
+                    }
+                    className="block w-full px-3 py-2 pl-5 bg-[#fff] border border-[#c5c5c5]  
+                    rounded-lg shadow-sm placeholder-gray-600 text-[#000] focus:outline-none 
+                    focus:ring-black focus:border-black sm:text-sm appearance-none"                  >
+                    <option value="admin">Admin</option>
+                    <option value="customer">Customer</option>
+                   </select>
+                   <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      <ChevronDown className="h-5 w-5 text-gray-400" />
+                    </div>
+                    </div>
+                </div>
+              </div>
+            )}
 
             {/* Country Selection */}
             <div>
@@ -326,27 +361,25 @@ const SignUpPage = () => {
 
             {/* Submit Button */}
             <div className="flex items-end justify-end">
-              <button
-                type="submit"
-                className="mt-6 w-full lg:w-[140px] flex justify-center items-center py-[10px] px-4 border border-transparent rounded-lg hover:rounded-full shadow-sm text-sm font-medium text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out disabled:opacity-50"
-                disabled={loading}
-              >
-                {loading ? (
-                  <Loader
-                    className="mr-2 h-5 w-5 animate-spin"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <>
-                    <UserPlus className="mr-2 h-5 w-5" aria-hidden="true" />
-                    Sign up
-                  </>
-                )}
-              </button>
-            </div>
+  <button
+    type="submit"
+    className={`mt-6 ${isCreateUser ? 'w-full' : 'lg:w-[140px]'} flex justify-center items-center py-[10px] px-4 border border-transparent rounded-lg hover:rounded-full shadow-sm text-sm font-medium text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out disabled:opacity-50`}
+    disabled={loading}
+  >
+    {loading ? (
+      <Loader className="mr-2 h-5 w-5 animate-spin" aria-hidden="true" />
+    ) : (
+      <>
+        <UserPlus className="mr-2 h-5 w-5" aria-hidden="true" />
+        {isCreateUser ? "Create User" : "Sign up"}
+      </>
+    )}
+  </button>
+</div>
+
           </form>
 
-          <p className="lg:-mt-8 mt-8 text-left text-sm text-gray-400">
+         {!isCreateUser&& <p className="lg:-mt-8 mt-8 text-left text-sm text-gray-400">
             Already have an account?{" "}
             <Link
               to="/login"
@@ -354,7 +387,7 @@ const SignUpPage = () => {
             >
               Login here <ArrowRight className="inline h-4 w-4" />
             </Link>
-          </p>
+          </p>}
         </div>
       </motion.div>
     </div>

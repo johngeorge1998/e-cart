@@ -90,7 +90,7 @@ const CreateProductForm = () => {
         transition={{ duration: 0.8 }}
       >
         <h2 className="text-2xl font-semibold mb-4 text-black">
-          {isEdit ? "Edit Product" : "Create New Product"}
+          {isEdit ? "Edit Product" : "Add New Product"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">

@@ -7,7 +7,7 @@ export const useUserStore = create((set, get) => ({
 	loading: false,
 	checkingAuth: true,
 
-	signup: async ({ name, email,address, password, confirmPassword }) => {
+	signup: async ({ name, email,address, password, confirmPassword,role },isCreateUser) => {
 		set({ loading: true });
 
 		if (password !== confirmPassword) {
@@ -16,8 +16,16 @@ export const useUserStore = create((set, get) => ({
 		}
 
 		try {
-			const res = await axios.post("/auth/signup", { name, email,address, password });
-			set({ user: res.data, loading: false });
+			const res = await axios.post("/auth/signup", { name, email,address, password,role });
+			if(isCreateUser){
+				toast.success("User created successfully!");
+				set({ loading: false });
+				window.location.href = "/secret-dashboard"; 
+			}else{
+				toast.success("Signup successfully!");
+				set({ loading: false });
+				window.location.href = "/"; 
+			}
 		} catch (error) {
 			set({ loading: false });
 			toast.error(error.response.data.message || "An error occurred");
