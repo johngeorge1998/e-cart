@@ -47,7 +47,7 @@ const CreateProductForm = () => {
         quantity: 1,
         image: "",
       });
-      navigate("/product-list");
+      navigate("/secret-dashboard");
     } catch (error) {
       console.log("Error saving product");
     }

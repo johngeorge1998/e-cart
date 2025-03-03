@@ -79,8 +79,7 @@ function App() {
             <Route path="/product" element={user ? <CreateProductForm/>  : <Navigate to="/login" />} />
  
             
-            <Route path="/product-list" element={user ? <ProductsList/>  : <Navigate to="/login" />} />
-            
+             
 
         </Routes>
       </div>
