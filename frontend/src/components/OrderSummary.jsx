@@ -66,14 +66,15 @@ const OrderSummary = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <p className="text-xl font-semibold text-black">Order summary</p>
+     {!isEditing &&(<p className="text-xl font-semibold text-black">Order summary</p>)}
+    { !isEditing &&(<div className="border-t border-gray-600"></div>)}
 
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
-              <p className="text-base font-semibold text-black">
-                Delivery Address
+              <p className={`text-base font-semibold text-black ${isEditing ? 'mb-2' : ''}`}>
+                {isEditing? "Change Delivery Address":"Delivery Address"}
               </p>
               {!isEditing && (
                 <button
@@ -89,7 +90,7 @@ const OrderSummary = () => {
               <div>
                 <div className="mb-4">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                     htmlFor="streetAddress"
                   >
                     Street Address
@@ -110,7 +111,7 @@ const OrderSummary = () => {
 
                 <div className="mb-4">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                     htmlFor="city"
                   >
                     City
@@ -131,7 +132,7 @@ const OrderSummary = () => {
 
                 <div className="mb-4">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                     htmlFor="province"
                   >
                     Province
@@ -152,7 +153,7 @@ const OrderSummary = () => {
 
                 <div className="mb-4">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                     htmlFor="postalCode"
                   >
                     Postal Code
@@ -173,7 +174,7 @@ const OrderSummary = () => {
 
                 <div className="mb-4">
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                     htmlFor="country"
                   >
                     Country
@@ -200,7 +201,7 @@ const OrderSummary = () => {
 
                 <button
                   onClick={handleSaveAddress}
-                  className="flex w-full items-center justify-center rounded-lg bg-black px-5 py-2.5 text-sm font-medium text-white hover:rounded-full focus:outline-none focus:ring-4 focus:ring-black mb-10"
+                  className="flex w-full items-center justify-center rounded-lg bg-black px-5 py-2.5 text-sm font-medium text-white hover:rounded-full focus:outline-none focus:ring-4 focus:ring-black mb-2 mt-7"
                 >
                   Save Address
                 </button>
@@ -216,19 +217,18 @@ const OrderSummary = () => {
             )}
           </div>
 
-          <dl className="flex items-center justify-between gap-4">
+         { !isEditing && (<><dl className="flex items-center justify-between gap-4">
             <dt className="text-base font-normal text-gray-700">
               Original price
             </dt>
             <dd className="text-base font-medium text-black">${total}</dd>
-          </dl>
-          <dl className="flex items-center justify-between gap-4 border-t border-gray-600 pt-2">
-            <dt className="text-base font-bold text-black">Total</dt>
-            <dd className="text-base font-bold text-black">${total}</dd>
-          </dl>
+          </dl><dl className="flex items-center justify-between gap-4 border-t border-gray-600 pt-2">
+              <dt className="text-base font-bold text-black">Total</dt>
+              <dd className="text-base font-bold text-black">${total}</dd>
+            </dl></>)}
         </div>
 
-        <motion.button
+       {!isEditing &&( <><motion.button
           className="flex w-full items-center justify-center rounded-lg bg-black px-5 py-2.5 text-sm font-medium text-white hover:rounded-full focus:outline-none focus:ring-4 focus:ring-black"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -236,18 +236,16 @@ const OrderSummary = () => {
           disabled={loading}
         >
           {loading ? "Placing Order..." : "Proceed to Checkout"}
-        </motion.button>
-
-        <div className="flex items-center justify-center gap-2">
-          <span className="text-sm font-normal text-gray-400">or</span>
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-sm font-medium text-black underline hover:text-gray-700 hover:no-underline"
-          >
-            Continue Shopping
-            <MoveRight size={16} />
-          </Link>
-        </div>
+        </motion.button><div className="flex items-center justify-center gap-2">
+            <span className="text-sm font-normal text-gray-400">or</span>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-sm font-medium text-black underline hover:text-gray-700 hover:no-underline"
+            >
+              Continue Shopping
+              <MoveRight size={16} />
+            </Link>
+          </div></>)}
       </div>
     </motion.div>
   );
