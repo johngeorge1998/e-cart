@@ -8,6 +8,7 @@ This project provides a fully functional online store with user authentication, 
 
 ## 🛠️ Technologies Used:
 
+
 ### Frontend:
 - **React** ⚛️
 - **TailwindCSS** 🎨
