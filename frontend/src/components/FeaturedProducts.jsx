@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import { ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCartStore } from "../stores/useCartStore";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../stores/useUserStore";
 
 const FeaturedProducts = ({ featuredProducts }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(4);
+  const { user } = useUserStore();
 
   const { addToCart } = useCartStore();
+  const navigate = useNavigate();
+
+  const handleAddToCart = (product) => {
+    if (user===null) {
+     navigate('/login')
+     return;
+   } else {
+      addToCart(product);
+   }
+ };
 
   useEffect(() => {
     const handleResize = () => {
@@ -73,7 +86,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
                         ${product.price.toFixed(2)}
                       </p>
                       <button
-                        onClick={() => addToCart(product)}
+                        onClick={() => handleAddToCart(product)}
                         className="w-full bg-black hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg hover:rounded-full transition-colors duration-300 
 												flex items-center justify-center"
                       >

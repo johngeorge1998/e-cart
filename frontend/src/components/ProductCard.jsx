@@ -1,22 +1,26 @@
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { ShoppingCart } from "lucide-react";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
-
+import { useNavigate } from "react-router-dom";
+ 
 const ProductCard = ({ product }) => {
-	const { user } = useUserStore();
-	const { addToCart } = useCartStore();
-	const handleAddToCart = () => {
-		if (!user) {
-			toast.error("Please login to add products to cart", { id: "login" });
-			return;
-		} else {
-			// add to cart
-			addToCart(product);
-		}
-	};
+  const { user } = useUserStore();
+  const { addToCart } = useCartStore();
+  const navigate = useNavigate();
+ 
+  const handleAddToCart = () => {
+     if (user===null) {
+      navigate('/login')
+      return;
+    } else {
+       addToCart(product);
+    }
+  };
 
-	return (
+
+  return (
     <div className="flex w-full relative flex-col overflow-hidden rounded-lg border-[1px] shadow-none bg-white">
       <div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
         <img
@@ -55,7 +59,10 @@ const ProductCard = ({ product }) => {
           {product.quantity === 0 ? "Out of Stock" : "Add to Cart"}
         </button>
       </div>
+
+     
     </div>
   );
 };
+
 export default ProductCard;

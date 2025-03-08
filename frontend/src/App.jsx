@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
@@ -13,13 +13,15 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import CartPage from "./pages/CartPage";
 import { useCartStore } from "./stores/useCartStore";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
- import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage";
 import ScrollToTop from "./components/ScrollToTop";
 import CreateProductForm from "./components/CreateProductForm";
- 
+
 function App() {
+  const path = useLocation();
   const { user, checkAuth, checkingAuth } = useUserStore();
   const { getCartItems } = useCartStore();
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
@@ -34,7 +36,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
-      {/* Background gradient */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[#f5f5f5]" />
@@ -42,40 +43,42 @@ function App() {
       </div>
 
       <div className="relative z-50 pt-20">
-      <ScrollToTop />
-        {user && <Navbar />}
+        <ScrollToTop />
 
-		<Routes>
-          <Route path="/" element={!user ? <Navigate to="/login" /> : <HomePage />} />
-          <Route
-            path="/signup"
-            element={!user ? <SignUpPage /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/login"
-            element={!user ? <LoginPage /> : <Navigate to="/" />}
-          />
+        {path.pathname === "/login" || path.pathname === "/signup" ? (
+          ""
+        ) : (
+          <Navbar />
+        )}
+
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+
           <Route
             path="/secret-dashboard"
             element={
               user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />
             }
           />
+
           <Route path="/category/:category" element={<CategoryPage />} />
+
           <Route
             path="/cart"
             element={user ? <CartPage /> : <Navigate to="/login" />}
           />
+
           <Route
             path="/purchase-success"
             element={user ? <PurchaseSuccessPage /> : <Navigate to="/login" />}
           />
-          
-            <Route path="/product" element={user ? <CreateProductForm/>  : <Navigate to="/login" />} />
- 
-            
-             
 
+          <Route
+            path="/product"
+            element={user ? <CreateProductForm /> : <Navigate to="/login" />}
+          />
         </Routes>
       </div>
       <Toaster />

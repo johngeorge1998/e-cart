@@ -35,7 +35,6 @@ const SignUpPage = ({ isCreateUser }) => {
     signup(formData, isCreateUser);
   };
 
-  console.log("isCreateUser", isCreateUser);
 
   return (
     <div className="flex flex-col justify-center items-center sm:px-6 lg:px-8">

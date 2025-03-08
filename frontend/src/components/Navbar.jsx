@@ -12,9 +12,14 @@ const Navbar = () => {
 		<header className='fixed top-0 left-0 w-full bg-[#000] bg-opacity-90 backdrop-blur-md shadow-2xl z-40 transition-all duration-300 border-b border-emerald-800'>
 			<div className='container mx-auto px-4 py-3'>
 				<div className='flex flex-wrap justify-between items-center'>
+					
+					
+					
 					<Link to='/' className='text-2xl font-bold text-white items-center space-x-2 flex'>
+					{user&&
 						<p className="text-[14px] font-light">Welcome, <span className="text-[16px] font-semibold ml-1">{user?.name ? user.name.charAt(0).toUpperCase() + user.name.slice(1) : ''}
 						</span></p>
+						}
 					</Link>
 
 					<nav className='flex flex-wrap items-center gap-4'>
@@ -67,16 +72,16 @@ const Navbar = () => {
 							<>
 								<Link
 									to={"/signup"}
-									className='bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 
-									rounded-md flex items-center transition duration-300 ease-in-out'
+										className='text-[14px] hover:animate-pulse hover:text-yellow-600 text-white py-2 px-0 
+						rounded-md flex items-center transition duration-300 ease-in-out'
 								>
 									<UserPlus className='mr-2' size={18} />
 									Sign Up
 								</Link>
 								<Link
 									to={"/login"}
-									className='bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 
-									rounded-md flex items-center transition duration-300 ease-in-out'
+									className='text-[14px] hover:animate-pulse hover:text-green-300 text-white py-2 px-0 
+						rounded-md flex items-center transition duration-300 ease-in-out'
 								>
 									<LogIn className='mr-2' size={18} />
 									Login
