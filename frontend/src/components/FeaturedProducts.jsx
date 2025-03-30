@@ -21,6 +21,9 @@ const FeaturedProducts = ({ featuredProducts }) => {
    }
  };
 
+ console.log('featuredProducts',featuredProducts);
+ 
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) setItemsPerPage(1);
@@ -90,8 +93,12 @@ const FeaturedProducts = ({ featuredProducts }) => {
                         className="w-full bg-black hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg hover:rounded-full transition-colors duration-300 
 												flex items-center justify-center"
                       >
-                        <ShoppingCart className="w-5 h-5 mr-2" />
-                        Add to Cart
+                         {featuredProducts.quantity === 0 ? (
+                                   ""
+                                 ) : (
+                                   <ShoppingCart size={22} className="mr-2" />
+                                 )}
+                                 {featuredProducts.quantity === 0 ? "Out of Stock" : "Add to Cart"}
                       </button>
                     </div>
                   </div>

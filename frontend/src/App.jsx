@@ -21,18 +21,24 @@ function App() {
   const path = useLocation();
   const { user, checkAuth, checkingAuth } = useUserStore();
   const { getCartItems } = useCartStore();
+  useEffect(() => {
+    const isProtectedRoute = !["/login", "/signup", "/"].includes(
+      path.pathname
+    );
+    if (isProtectedRoute) {
+      checkAuth();
+    }
+  }, [checkAuth, path.pathname]);
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
-
-  useEffect(() => {
-    if (!user) return;
-
-    getCartItems();
+    if (user) {
+      getCartItems();
+    }
   }, [getCartItems, user]);
 
-  if (checkingAuth) return <LoadingSpinner />;
+  if (checkingAuth && !["/login", "/signup", "/"].includes(path.pathname)) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
